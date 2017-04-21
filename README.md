@@ -7,7 +7,7 @@ Forked from https://github.com/jakenuts/Gbase.NLog.JsonTarget.
 Dependencies
 ------------
 
-Currently using ServiceStack.Text for serialization and HttpClient to post asynchronously.
+Currently using Newtonsoft.Json for serialization and HttpClient to post asynchronously.
 
 Usage
 -----
