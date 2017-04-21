@@ -4,35 +4,15 @@
         <id>ISchemm.NLog.JsonTarget</id>
         <version>1.0.5</version>
         <title>ISchemm.NLog.JsonTarget</title>
-        <authors>James White, Isaac Schemm</authors>
+        <authors>Isaac Schemm, James White</authors>
         <owners>Isaac Schemm</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <copyright>Copyright ©  2017</copyright>
         <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
         <projectUrl>https://github.com/IsaacSchemm/ISchemm.NLog.JsonTarget</projectUrl>
-        <description>
-        ISchemm.NLog.JsonTarget
-        =======================
-
-        A NLog target that posts Json to a http endpoint.
-		Forked from https://github.com/jakenuts/Gbase.NLog.JsonTarget.
-
-        Dependencies
-        ------------
-
-        Currently using ServiceStack.Text for serialization and HttpClient to post asynchronously.
-
-        Usage
-        -----
-
-        Visit the GitHub project site for usage, examples &amp; source!
-
-        https://github.com/IsaacSchemm/ISchemm.NLog.JsonTarget
-
-        Released under MIT License. Enjoy!
-      </description>
-      <summary>An NLog target that posts Json to an Http endpoint.</summary>
-      <language />
-      <tags>nlog,json</tags>
+        <description>An NLog target that posts JSON to an HTTP endpoint, using Json.NET. You can also set a POST URL programatically instead of in App.config.</description>
+        <summary>An NLog target that posts JSON to an HTTP endpoint, using Json.NET.</summary>
+        <language />
+        <tags>nlog,json</tags>
     </metadata>
 </package>
