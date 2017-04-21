@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ISchemm.NLog.JsonTarget")]
 [assembly: AssemblyDescription("A NLog target that posts Json to a http endpoint")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ISchemm.com")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ISchemm.NLog.JsonTarget")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
