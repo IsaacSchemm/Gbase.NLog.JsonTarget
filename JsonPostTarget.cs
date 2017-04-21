@@ -77,15 +77,25 @@ namespace Gbase.NLog.JsonTarget
         [ArrayParameter(typeof (LogField), "field")]
         public IList<LogField> Fields { get; private set; }
 
-        [RequiredParameter]
         public Layout Url { get; set; }
+
+        public static string DefaultUrl { get; set; }
 
         protected override void Write(AsyncLogEventInfo info)
         {
             try
             {
-                var uri = new Uri(Url.Render(info.LogEvent));
                 var json = BuildJsonEvent(info.LogEvent);
+
+                var layout = Url ?? Layout.FromString(DefaultUrl);
+                if (layout == null)
+                {
+#if DEBUG
+                    Debug.WriteLine("Not sending (no URL defined): " + json);
+#endif
+                    return;
+                }
+                var uri = new Uri(layout.Render(info.LogEvent));
 
 #if DEBUG
                 Debug.WriteLine("Sending: " + json);
