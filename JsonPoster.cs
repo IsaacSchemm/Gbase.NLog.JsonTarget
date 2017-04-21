@@ -27,7 +27,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gbase.NLog.JsonTarget
+namespace ISchemm.NLog.JsonTarget
 {
     internal sealed class JsonPoster : IDisposable
     {

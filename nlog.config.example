@@ -4,7 +4,7 @@
       throwExceptions="true">
 
   <extensions>
-    <add assembly="Gbase.NLog.JsonTarget" />
+    <add assembly="ISchemm.NLog.JsonTarget" />
   </extensions>
   
   <!-- 

@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
-        <id>Gbase.NLog.JsonTarget</id>
-        <version>1.0.4</version>
-        <title>Gbase.NLog.JsonTarget</title>
-        <authors>James White</authors>
-        <owners>James White</owners>
+        <id>ISchemm.NLog.JsonTarget</id>
+        <version>1.0.5</version>
+        <title>ISchemm.NLog.JsonTarget</title>
+        <authors>James White, Isaac Schemm</authors>
+        <owners>Isaac Schemm</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <copyright>Copyright ©  2014</copyright>
+        <copyright>Copyright ©  2017</copyright>
         <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
-        <projectUrl>https://github.com/jakenuts/Gbase.NLog.JsonTarget</projectUrl>
+        <projectUrl>https://github.com/IsaacSchemm/ISchemm.NLog.JsonTarget</projectUrl>
         <description>
-        Gbase.NLog.JsonTarget
-        =====================
+        ISchemm.NLog.JsonTarget
+        =======================
 
-        A NLog target that posts Json to a http endpoint
+        A NLog target that posts Json to a http endpoint.
+		Forked from https://github.com/jakenuts/Gbase.NLog.JsonTarget.
 
         Dependencies
         ------------
@@ -26,7 +27,7 @@
 
         Visit the GitHub project site for usage, examples &amp; source!
 
-        https://github.com/jakenuts/Gbase.NLog.JsonTarget
+        https://github.com/IsaacSchemm/ISchemm.NLog.JsonTarget
 
         Released under MIT License. Enjoy!
       </description>

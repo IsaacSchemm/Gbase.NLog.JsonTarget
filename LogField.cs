@@ -22,7 +22,7 @@
 using NLog.Config;
 using NLog.Layouts;
 
-namespace Gbase.NLog.JsonTarget
+namespace ISchemm.NLog.JsonTarget
 {
     [NLogConfigurationItem]
     public sealed class LogField

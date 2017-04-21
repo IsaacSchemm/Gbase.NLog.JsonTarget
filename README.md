@@ -1,7 +1,8 @@
-Gbase.NLog.JsonTarget
-=====================
+ISchemm.NLog.JsonTarget
+=======================
 
-A NLog target that posts Json to a http endpoint
+A NLog target that posts Json to a http endpoint.
+Forked from https://github.com/jakenuts/Gbase.NLog.JsonTarget.
 
 Dependencies
 ------------
@@ -11,12 +12,12 @@ Currently using ServiceStack.Text for serialization and HttpClient to post async
 Usage
 -----
 
-Add Gbase.NLog.JsonTarget to your solution and update your nlog.config:
+Add ISchemm.NLog.JsonTarget to your solution and update your nlog.config:
 
 Add the assembly to the extensions section
 
     <extensions>
-        <add assembly="Gbase.NLog.JsonTarget" />
+        <add assembly="ISchemm.NLog.JsonTarget" />
     </extensions>
 
 Add the target with a url & fields to post
@@ -79,11 +80,7 @@ Examples
 Changes
 -------
 
-v1.0.0 Initial Release
-
-v1.0.1 Added 'property' to log field
-
-v1.0.2 Added 'logger' to field lookup (logger name)
+v1.0.5 Initial Release (from Gbase.NLog.JsonTarget v1.0.4)
 
 License
 --------

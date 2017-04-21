@@ -32,7 +32,7 @@ using NLog.Layouts;
 using NLog.Targets;
 using ServiceStack;
 
-namespace Gbase.NLog.JsonTarget
+namespace ISchemm.NLog.JsonTarget
 {
     [Target("JsonPost")]
     public sealed class JsonPostTarget : Target
