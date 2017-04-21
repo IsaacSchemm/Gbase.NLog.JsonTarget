@@ -30,7 +30,7 @@ using NLog.Common;
 using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
-using Newtonsoft.Json;
+using ServiceStack;
 
 namespace ISchemm.NLog.JsonTarget
 {
@@ -173,7 +173,7 @@ namespace ISchemm.NLog.JsonTarget
         /// <returns></returns>
         private static string ToJson<T>(T value)
         {
-            return JsonConvert.SerializeObject(value);
+            return value.ToJson();
         }
 
         #region Field Lookups
