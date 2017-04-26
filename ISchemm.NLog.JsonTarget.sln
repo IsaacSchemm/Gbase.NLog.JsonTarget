@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ischemm.NLog.JsonTarget", "Ischemm.NLog.JsonTarget.csproj", "{C32F4DA4-FE55-4B41-B3A1-7008515AB65C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{89BF9003-AE69-4580-AE00-EBB53806F485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{C32F4DA4-FE55-4B41-B3A1-7008515AB65C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C32F4DA4-FE55-4B41-B3A1-7008515AB65C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C32F4DA4-FE55-4B41-B3A1-7008515AB65C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89BF9003-AE69-4580-AE00-EBB53806F485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89BF9003-AE69-4580-AE00-EBB53806F485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89BF9003-AE69-4580-AE00-EBB53806F485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89BF9003-AE69-4580-AE00-EBB53806F485}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
