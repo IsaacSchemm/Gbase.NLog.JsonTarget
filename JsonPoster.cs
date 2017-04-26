@@ -41,8 +41,6 @@ namespace ISchemm.NLog.JsonTarget
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public bool ThrowExceptionsOnFailedPost { get; set; }
-
         public void Dispose()
         {
             if (_httpClient == null)
@@ -60,27 +58,41 @@ namespace ISchemm.NLog.JsonTarget
             return this;
         }
 
-        public async void Post(Uri uri, string json)
+        public async void Post(Uri uri, string json, int[] retries)
         {
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
             try
             {
-                
                 var posts = Interlocked.Increment(ref ActivePosts);
 
+#if DEBUG
                 Debug.WriteLine("JsonPoster posting ({0})...", posts);
+#endif
 
-                var response = await _httpClient.PostAsync(uri, content);//.WithTimeout(_httpClient.Timeout);
+                for (int i = 0; i < retries.Length; i++)
+                {
+                    try
+                    {
+                        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                        var response = await _httpClient.PostAsync(uri, content);//.WithTimeout(_httpClient.Timeout);
 
-                if (ThrowExceptionsOnFailedPost)
-                    response.EnsureSuccessStatusCode();
+                        response.EnsureSuccessStatusCode();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+#if DEBUG
+                        Debug.WriteLine($"JsonPoster {json.GetHashCode()}: waiting for {TimeSpan.FromSeconds(retries[i])}, attempt {i + 1}/{retries.Length}: {ex.GetType().Name}: {ex.Message}");
+#endif
+                        await Task.Delay(retries[i] * 1000);
+                    }
+                }
             }
             catch (TaskCanceledException cancelledEx)
             {
+#if DEBUG
                 Debug.WriteLine("Task #{0} cancelled..", cancelledEx.Task.Id);
-            }
-            finally
+#endif
+            } finally
             {
                 var posts = Interlocked.Decrement(ref ActivePosts);
 

@@ -31,6 +31,7 @@ using NLog.Config;
 using NLog.Layouts;
 using NLog.Targets;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace ISchemm.NLog.JsonTarget
 {
@@ -58,7 +59,7 @@ namespace ISchemm.NLog.JsonTarget
 
         protected override void CloseTarget()
         {
-            
+
             try
             {
                 _poster.Dispose();
@@ -74,12 +75,38 @@ namespace ISchemm.NLog.JsonTarget
 
         #endregion
 
-        [ArrayParameter(typeof (LogField), "field")]
+        [ArrayParameter(typeof(LogField), "field")]
         public IList<LogField> Fields { get; private set; }
 
         public Layout Url { get; set; }
 
+        /// <summary>
+        /// This property controls the HTTP URL to post to if no URL is
+        /// defined for the target in the configuration file.
+        /// </summary>
         public static string DefaultUrl { get; set; }
+
+        private static int[] _retryLengthsSec = new int[] { 0, 60, 240, 600 };
+        /// <summary>
+        /// This property controls the intervals (in seconds) between retries
+        /// if the log message cannot be posted.
+        /// </summary>
+        /// <remarks>
+        /// The default is { 0, 60, 240, 600 }, which means that the POST will
+        /// be retried 4 times upon failure: once after no delay, once after a
+        /// delay of one minute, once after 4 more minutes, and once after 5
+        /// more minutes. If the post still doesn't succeed, JsonPostTarget
+        /// will give up and skip the log entry.
+        /// </remarks>
+        public static IEnumerable<int> RetryIntervals {
+            get {
+                return _retryLengthsSec;
+            }
+            set {
+                if (value == null) throw new ArgumentNullException();
+                _retryLengthsSec = value.ToArray();
+            }
+        }
 
         protected override void Write(AsyncLogEventInfo info)
         {
@@ -101,7 +128,7 @@ namespace ISchemm.NLog.JsonTarget
                 Debug.WriteLine("Sending: " + json);
 #endif
 
-                _poster.Post(uri, json);
+                _poster.Post(uri, json, _retryLengthsSec);
 
                 info.Continuation(null);
             }
