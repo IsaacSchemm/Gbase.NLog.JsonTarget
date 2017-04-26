@@ -60,6 +60,7 @@ namespace ISchemm.NLog.JsonTarget
           
             Debug.WriteLine("Disposing..");
 
+            CancelAll();
             _httpClient.Dispose();
             _httpClient = null;
         }

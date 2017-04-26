@@ -80,7 +80,13 @@ Examples
 Changes
 -------
 
-v1.0.5 Initial Release (from Gbase.NLog.JsonTarget v1.0.4)
+v1.0.5
+  - Initial Release (from Gbase.NLog.JsonTarget v1.0.4)
+
+v1.0.6
+  - Add retryIntervals setting (default is 0,60,240,300)
+  - Use CancellationToken to cancel tasks when the application closes
+  - Remove override of FlushAsync method (which was only waiting for tasks to complete and, in this situation, could take a long time)
 
 License
 --------

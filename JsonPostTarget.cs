@@ -125,7 +125,7 @@ namespace ISchemm.NLog.JsonTarget
             }
         }
 
-        /// <summary>
+        /*/// <summary>
         ///     Flush any pending log messages asynchronously (in case of asynchronous targets).
         /// </summary>
         /// <param name="asyncContinuation">The asynchronous continuation.</param>
@@ -134,7 +134,6 @@ namespace ISchemm.NLog.JsonTarget
             var flushTask = Task.Factory.StartNew(pst =>
             {
                 var poster = ((JsonPoster)pst);
-                poster.CancelAll();
 
                 while (poster.ActivePosts > 0)
                 {
@@ -147,7 +146,7 @@ namespace ISchemm.NLog.JsonTarget
             }, _poster);
 
             flushTask.ContinueWith(task => asyncContinuation(task.Exception));
-        }
+        }*/
 
         private string BuildJsonEvent(LogEventInfo logEvent)
         {
