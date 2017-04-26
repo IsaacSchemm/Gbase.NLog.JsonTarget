@@ -20,7 +20,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -33,12 +35,22 @@ namespace ISchemm.NLog.JsonTarget
     {
         public int ActivePosts = 0;
         private HttpClient _httpClient;
+        private HashSet<CancellationTokenSource> _runningDelays;
 
         public JsonPoster()
         {
             _httpClient = new HttpClient();
             _httpClient.DefaultRequestHeaders.ConnectionClose = true;
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            _runningDelays = new HashSet<CancellationTokenSource>();
+        }
+
+        public void CancelAll() {
+            CancellationTokenSource[] array = _runningDelays.ToArray();
+            foreach (var tokenSource in array) {
+                tokenSource.Cancel();
+            }
+            _runningDelays.Clear();
         }
 
         public void Dispose()
@@ -60,6 +72,9 @@ namespace ISchemm.NLog.JsonTarget
 
         public async void Post(Uri uri, string json, int[] retries)
         {
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
+            _runningDelays.Add(tokenSource);
+
             try
             {
                 var posts = Interlocked.Increment(ref ActivePosts);
@@ -73,7 +88,7 @@ namespace ISchemm.NLog.JsonTarget
                     try
                     {
                         var content = new StringContent(json, Encoding.UTF8, "application/json");
-                        var response = await _httpClient.PostAsync(uri, content);//.WithTimeout(_httpClient.Timeout);
+                        var response = await _httpClient.PostAsync(uri, content, tokenSource.Token);//.WithTimeout(_httpClient.Timeout);
 
                         response.EnsureSuccessStatusCode();
                         break;
@@ -83,7 +98,7 @@ namespace ISchemm.NLog.JsonTarget
 #if DEBUG
                         Debug.WriteLine($"JsonPoster {json.GetHashCode()}: waiting for {TimeSpan.FromSeconds(retries[i])}, attempt {i + 1}/{retries.Length}: {ex.GetType().Name}: {ex.Message}");
 #endif
-                        await Task.Delay(retries[i] * 1000);
+                        await Task.Delay(retries[i] * 1000, tokenSource.Token);
                     }
                 }
             }
@@ -92,8 +107,10 @@ namespace ISchemm.NLog.JsonTarget
 #if DEBUG
                 Debug.WriteLine("Task #{0} cancelled..", cancelledEx.Task.Id);
 #endif
-            } finally
+            }
+            finally
             {
+                _runningDelays.Remove(tokenSource);
                 var posts = Interlocked.Decrement(ref ActivePosts);
 
                 Debug.WriteLine("JsonPoster completed ({0})...", posts);

@@ -134,6 +134,7 @@ namespace ISchemm.NLog.JsonTarget
             var flushTask = Task.Factory.StartNew(pst =>
             {
                 var poster = ((JsonPoster)pst);
+                poster.CancelAll();
 
                 while (poster.ActivePosts > 0)
                 {
