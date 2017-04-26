@@ -86,27 +86,7 @@ namespace ISchemm.NLog.JsonTarget
         /// </summary>
         public static string DefaultUrl { get; set; }
 
-        private static int[] _retryLengthsSec = new int[] { 0, 60, 240, 600 };
-        /// <summary>
-        /// This property controls the intervals (in seconds) between retries
-        /// if the log message cannot be posted.
-        /// </summary>
-        /// <remarks>
-        /// The default is { 0, 60, 240, 600 }, which means that the POST will
-        /// be retried 4 times upon failure: once after no delay, once after a
-        /// delay of one minute, once after 4 more minutes, and once after 5
-        /// more minutes. If the post still doesn't succeed, JsonPostTarget
-        /// will give up and skip the log entry.
-        /// </remarks>
-        public static IEnumerable<int> RetryIntervals {
-            get {
-                return _retryLengthsSec;
-            }
-            set {
-                if (value == null) throw new ArgumentNullException();
-                _retryLengthsSec = value.ToArray();
-            }
-        }
+        public Layout RetryIntervals { get; set; }
 
         protected override void Write(AsyncLogEventInfo info)
         {
@@ -128,7 +108,14 @@ namespace ISchemm.NLog.JsonTarget
                 Debug.WriteLine("Sending: " + json);
 #endif
 
-                _poster.Post(uri, json, _retryLengthsSec);
+                int[] retryIntervals = RetryIntervals?.Render(info.LogEvent)
+                    ?.Split(',')
+                    ?.Select(s => int.Parse(s.Trim()))
+                    ?.ToArray();
+                if (retryIntervals == null) {
+                    retryIntervals = new int[] { 0, 60, 240, 600 };
+                }
+                _poster.Post(uri, json, retryIntervals);
 
                 info.Continuation(null);
             }

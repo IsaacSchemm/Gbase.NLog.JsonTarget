@@ -14,7 +14,6 @@ namespace Example {
             LogManager.ThrowExceptions = true;
 
             JsonPostTarget.DefaultUrl = "http://localhost:51478/Log/Post";
-            JsonPostTarget.RetryIntervals = Enumerable.Repeat(30, 5);
 
             logger.Debug("Debug message");
             logger.Warn("Warning message");
