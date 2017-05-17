@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>ISchemm.NLog.JsonTarget</id>
-        <version>2.0.0</version>
+        <version>2.0.1</version>
         <title>ISchemm.NLog.JsonTarget</title>
         <authors>Isaac Schemm, James White</authors>
         <owners>Isaac Schemm</owners>

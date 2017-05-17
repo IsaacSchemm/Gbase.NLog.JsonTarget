@@ -88,6 +88,9 @@ v2.0.0
   - Use CancellationToken to cancel tasks when the application closes
   - Remove override of FlushAsync method (which was only waiting for tasks to complete and, in this situation, could take a long time)
 
+v2.0.1
+  - Remove README.md and nlog.config.example from nupkg
+
 License
 --------
 
